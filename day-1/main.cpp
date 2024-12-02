@@ -6,6 +6,7 @@
 #include <ranges>
 #include <string_view>
 #include <algorithm>
+#include <unordered_map>
 
 //#include <absl/strings/str_split.h>
 
@@ -45,16 +46,30 @@ int main() {
         //std::vector<std::string> split_string = absl::StrSplit(single_line, ' ', absl::SkipEmpty());
     }
 
-    int output{};
+    int output_problem_1{};
 
     std::ranges::sort(left_list);
     std::ranges::sort(right_list);
 
     for (int i = 0; i < left_list.size(); ++i) {
-        output += std::abs(left_list[i] - right_list[i]);
+        output_problem_1 += std::abs(left_list[i] - right_list[i]);
     }
 
-    std::cout << "Answer is: " << output << std::endl;
+    std::cout << "Answer for problem 1 is: " << output_problem_1 << std::endl;
+
+    // problem 2
+    auto right_list_hist = std::unordered_map<int, int>{};
+    for (auto& val: right_list) {
+        right_list_hist[val] += 1;
+    }
+
+    int output_problem_2{};
+
+    for (auto& val: left_list) {
+        output_problem_2 += val * right_list_hist[val];
+    }
+
+    std::cout << "Answer for problem 2 is: " << output_problem_2 << std::endl;
 
     return 0;
 }
