@@ -6,8 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 # this is heuristically generated, and may not be correct
 find_package(absl CONFIG REQUIRED)
 
-add_executable(day-1-problem-1 day-1-problem-1/main.cpp)
-
+add_executable(day-1-problem-1 day-1/main.cpp)
 
 
 # note: 186 additional targets are not displayed.
