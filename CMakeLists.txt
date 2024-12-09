@@ -18,5 +18,8 @@ target_include_directories(day-4 PRIVATE ./include)
 add_executable(day-5 day-5/main.cpp)
 target_include_directories(day-5 PRIVATE ./include)
 
+add_executable(day-6 day-6/main.cpp)
+target_include_directories(day-6 PRIVATE ./include)
+
 # note: 186 additional targets are not displayed.
 #target_link_libraries(day-1 PRIVATE absl::strings)
