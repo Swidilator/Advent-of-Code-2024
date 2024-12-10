@@ -38,7 +38,7 @@ int main() {
                                      ","sv
                                  )
                                  | std::views::transform([](const std::vector<std::string> &vec) {
-                                     return util::string_to_int(vec);
+                                     return util::string_to_long(vec);
                                  })
                                  | std::ranges::to<std::vector>();
 

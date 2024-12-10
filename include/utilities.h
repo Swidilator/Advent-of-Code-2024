@@ -33,10 +33,8 @@ namespace util {
     //     return string_to_int(std::string(input));
     // }
 
-    inline int string_to_int(const std::string &input) {
-        int result;
-        std::from_chars(input.data(), input.data() + input.size(), result);
-        return result;
+    inline long string_to_long(const std::string &input) {
+        return std::stol(input);
     }
 
     // inline std::vector<int> string_to_int(const std::vector<const char*> &input) {
@@ -44,9 +42,9 @@ namespace util {
     //     | std::ranges::to<std::vector>();
     // }
 
-    inline std::vector<int> string_to_int(const std::vector<std::string> &input) {
+    inline std::vector<long> string_to_long(const std::vector<std::string> &input) {
         return input | std::views::transform([](const std::string &str) {
-                   return std::stoi(str);
+                   return std::stol(str);
                })
                | std::ranges::to<std::vector>();
     }
