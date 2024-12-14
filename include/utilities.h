@@ -4,10 +4,11 @@
 
 #ifndef UTILITIES_H
 #define UTILITIES_H
-#include <charconv>
+
 #include <string>
 #include <ranges>
 #include <filesystem>
+#include <algorithm>
 
 namespace util {
     using std::operator""sv;
@@ -74,6 +75,79 @@ namespace util {
                    | std::ranges::to<std::vector>();
         }) | std::ranges::to<std::vector>();
     }
+
+
+    struct Coordinates {
+        long x, y;
+
+        bool operator==(const Coordinates & b) const {
+            return (x == b.x) && (y == b.y);
+        }
+    };
+
+
+    template<typename T>
+    class MapElementBase {
+    protected:
+        T _data{};
+        Coordinates _coordinates;
+
+    public:
+        explicit MapElementBase(const T data, const Coordinates& c)
+        : _data{data}, _coordinates{c} {
+        }
+
+        const Coordinates& get_coordinates() const {
+            return _coordinates;
+        }
+    };
+
+
+
+    template<typename S, std::derived_from<MapElementBase<S>> E>
+    class Grid {
+        std::size_t _width, _height = 0;
+        std::vector<std::vector<E> > _map{};
+
+    public:
+        [[nodiscard]] std::size_t width() const {
+            return _width;
+        }
+
+        [[nodiscard]] std::size_t height() const {
+            return _height;
+        }
+
+        // referenced x,y = 0 at top left, row major
+        [[nodiscard]] E &operator[](const std::size_t x, const std::size_t y) {
+            if (x < _height && y < _width) {
+                return _map[x][y];
+            }
+            throw std::out_of_range("Invalid map coordinates");
+        }
+
+        [[nodiscard]] const E &operator[](const std::size_t x, const std::size_t y) const {
+            if (x < _height && y < _width) {
+                return _map[x][y];
+            }
+            throw std::out_of_range("Invalid map coordinates");
+        }
+
+        explicit Grid(const std::vector<std::vector<S> > &input_map) {
+            _height = input_map.size();
+            _width = input_map[0].size();
+
+            int x = 0;
+            std::ranges::for_each(input_map, [this, &x](const std::vector<S> &input_row) -> void {
+                std::vector<E> row{};
+                for (std::size_t y = 0; y < input_row.size(); ++y) {
+                    row.emplace_back(input_row[y], Coordinates(x, y));
+                }
+                _map.emplace_back(std::move(row));
+                ++x;
+            });
+        }
+    };
 }
 
 #endif //UTILITIES_H

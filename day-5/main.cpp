@@ -26,8 +26,8 @@ int main() {
                                )
                                | std::views::transform([](const auto &vec) {
                                    return std::pair<int, int>{
-                                       util::string_to_int(std::string(vec[0])),
-                                       util::string_to_int(std::string(vec[1]))
+                                       util::string_to_long(std::string(vec[0])),
+                                       util::string_to_long(std::string(vec[1]))
                                    };
                                })
                                | std::ranges::to<std::vector>();
@@ -51,7 +51,7 @@ int main() {
     int sum_middle_values{};
 
     // find violations using blacklist
-    std::ranges::for_each(input_strings_updates, [&](const std::vector<int> &update_vec) {
+    std::ranges::for_each(input_strings_updates, [&](const std::vector<long> &update_vec) {
         bool error_found = false;
         for (int i = 0; i < update_vec.size(); ++i) {
             if (error_found) {
