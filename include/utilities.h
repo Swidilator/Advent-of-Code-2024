@@ -13,35 +13,9 @@
 namespace util {
     using std::operator""sv;
 
-    // template<typename R, typename T>
-    // concept input_range_of =
-    //     std::ranges::input_range<R> &&
-    //         std::convertible_to<std::ranges::range_value_t<R>, T>;
-    //
-    //
-    // class VectorStringToInt {
-    // public:
-    //     std::vector<int> data{};
-    //     explicit VectorStringToInt(input_range_of<int> auto&& range)
-    //     {
-    //         data = range | std::views::transform([](const auto&& inp) {
-    //             return std::stoi(inp);
-    //         }) | std::ranges::to<std::vector>();
-    //     }
-    // };
-
-    // inline int string_to_int(const std::string_view &input) {
-    //     return string_to_int(std::string(input));
-    // }
-
     inline long string_to_long(const std::string &input) {
         return std::stol(input);
     }
-
-    // inline std::vector<int> string_to_int(const std::vector<const char*> &input) {
-    //     return input | std::views::transform([](const char* ch){return std::string{ch};})
-    //     | std::ranges::to<std::vector>();
-    // }
 
     inline std::vector<long> string_to_long(const std::vector<std::string> &input) {
         return input | std::views::transform([](const std::string &str) {
@@ -80,7 +54,7 @@ namespace util {
     struct Coordinates {
         long x, y;
 
-        bool operator==(const Coordinates & b) const {
+        bool operator==(const Coordinates &b) const {
             return (x == b.x) && (y == b.y);
         }
     };
@@ -93,18 +67,17 @@ namespace util {
         Coordinates _coordinates;
 
     public:
-        explicit MapElementBase(const T data, const Coordinates& c)
-        : _data{data}, _coordinates{c} {
+        explicit MapElementBase(const T data, const Coordinates &c)
+            : _data{data}, _coordinates{c} {
         }
 
-        const Coordinates& get_coordinates() const {
+        const Coordinates &get_coordinates() const {
             return _coordinates;
         }
     };
 
 
-
-    template<typename S, std::derived_from<MapElementBase<S>> E>
+    template<typename S, std::derived_from<MapElementBase<S> > E>
     class Grid {
         std::size_t _width, _height = 0;
         std::vector<std::vector<E> > _map{};
@@ -146,6 +119,13 @@ namespace util {
                 _map.emplace_back(std::move(row));
                 ++x;
             });
+        }
+
+        [[nodiscard]] bool contains(const Coordinates &coords) const {
+            return coords.x < _height
+                   && coords.x >= 0
+                   && coords.y < _width
+                   && coords.y >= 0;
         }
     };
 }

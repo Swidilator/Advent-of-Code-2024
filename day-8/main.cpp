@@ -94,10 +94,7 @@ int main() {
                 auto antinode_pos = calculate_antinode(a_coords, b_coords);
                 std::cout << std::format("x: {}  y: {}\n", antinode_pos.x, antinode_pos.y);
 
-                while ((antinode_pos.x < grid.height()
-                        && antinode_pos.x >= 0
-                        && antinode_pos.y < grid.width()
-                        && antinode_pos.y >= 0)) {
+                while (grid.contains(antinode_pos)) {
                     grid[antinode_pos.x, antinode_pos.y].antinode = true;
                     if (solution_1_only) {
                         break;
