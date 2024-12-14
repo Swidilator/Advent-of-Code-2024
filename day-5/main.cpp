@@ -13,7 +13,7 @@
 
 #include <bits/ranges_algo.h>
 
-#include "utilities.h"
+import Util;
 
 int main() {
     // Load data
@@ -26,8 +26,8 @@ int main() {
                                )
                                | std::views::transform([](const auto &vec) {
                                    return std::pair<int, int>{
-                                       util::string_to_long(std::string(vec[0])),
-                                       util::string_to_long(std::string(vec[1]))
+                                       std::stol(std::string(vec[0])),
+                                       std::stol(std::string(vec[1]))
                                    };
                                })
                                | std::ranges::to<std::vector>();

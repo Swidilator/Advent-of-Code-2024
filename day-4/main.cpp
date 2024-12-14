@@ -10,7 +10,7 @@
 
 //#include <absl/strings/str_split.h>
 
-#include "utilities.h"
+import Util;
 
 int main() {
     // Load data

@@ -2,9 +2,17 @@ cmake_minimum_required(VERSION 3.30)
 project(Advent_of_Code_2024)
 
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
-# this is heuristically generated, and may not be correct
-#find_package(absl CONFIG REQUIRED)
+
+add_library(util STATIC )
+target_sources(util PUBLIC
+        FILE_SET modules
+        TYPE CXX_MODULES
+        FILES libutil/Util.ixx
+        libutil/Grid.ixx
+        libutil/Misc.ixx
+)
 
 add_executable(day-1 day-1/main.cpp)
 
@@ -13,16 +21,19 @@ add_executable(day-2 day-2/main.cpp)
 add_executable(day-3 day-3/main.cpp)
 
 add_executable(day-4 day-4/main.cpp)
-target_include_directories(day-4 PRIVATE ./include)
+target_link_libraries(day-4 util)
 
 add_executable(day-5 day-5/main.cpp)
-target_include_directories(day-5 PRIVATE ./include)
+target_link_libraries(day-5 util)
 
 add_executable(day-6 day-6/main.cpp)
-target_include_directories(day-6 PRIVATE ./include)
+target_link_libraries(day-6 util)
 
 add_executable(day-7 day-7/main.cpp)
-target_include_directories(day-7 PRIVATE ./include)
+target_link_libraries(day-7 util)
 
+add_executable(day-8 day-8/main.cpp)
+target_link_libraries(day-8 util)
 
-#target_link_libraries(day-1 PRIVATE absl::strings)
+#add_executable(day-9 day-9/main.cpp)
+#target_link_libraries(day-9 util)

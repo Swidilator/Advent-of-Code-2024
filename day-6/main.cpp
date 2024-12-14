@@ -13,14 +13,14 @@
 
 #include <bits/ranges_algo.h>
 
-#include "utilities.h"
+import Util;
 
-enum class MapElementType {
+enum class GridElementType {
     obstacle, open_space
 };
 
-struct MapElement {
-    MapElementType type;
+struct GridElement {
+    GridElementType type;
     bool stepped_on = false;
 };
 
@@ -39,7 +39,7 @@ struct coord {
 class PuzzleMap {
     std::size_t _width, _height = 0;
     coord _guard_starting_position{};
-    std::vector<std::vector<MapElement> > _map{};
+    std::vector<std::vector<GridElement> > _map{};
 public:
 
 
@@ -56,14 +56,14 @@ public:
     }
 
     // referenced x,y = 0 at top left, row major
-    [[nodiscard]] MapElement &operator[](const std::size_t x, const std::size_t y) {
+    [[nodiscard]] GridElement &operator[](const std::size_t x, const std::size_t y) {
         if (x < _height && y < _width) {
             return _map[x][y];
         }
         throw std::out_of_range("Invalid map coordinates");
     }
 
-    [[nodiscard]] const MapElement &operator[](const std::size_t x, const std::size_t y) const {
+    [[nodiscard]] const GridElement &operator[](const std::size_t x, const std::size_t y) const {
         if (x < _height && y < _width) {
             return _map[x][y];
         }
@@ -72,8 +72,8 @@ public:
 
     [[nodiscard]] int count_stepped_on() const {
         int num_stepped_on{};
-        std::ranges::for_each(_map, [&num_stepped_on](const std::vector<MapElement> &vec) {
-            std::ranges::for_each(vec, [&num_stepped_on](const MapElement &e) {
+        std::ranges::for_each(_map, [&num_stepped_on](const std::vector<GridElement> &vec) {
+            std::ranges::for_each(vec, [&num_stepped_on](const GridElement &e) {
                 if (e.stepped_on) {
                     num_stepped_on++;
                 }
@@ -88,15 +88,15 @@ public:
 
         int x = 0;
         std::ranges::for_each(input_map, [this, &x](const std::string &str) -> void {
-            std::vector<MapElement> row{};
+            std::vector<GridElement> row{};
             for (std::size_t y = 0; y < str.size(); ++y) {
                 if (str[y] == '#')
-                    row.emplace_back(MapElement{MapElementType::obstacle, false});
+                    row.emplace_back(GridElement{GridElementType::obstacle, false});
                 else if (str[y] == '.')
-                    row.emplace_back(MapElement{MapElementType::open_space, false});
+                    row.emplace_back(GridElement{GridElementType::open_space, false});
                 else if (str[y] == '^') {
                     _guard_starting_position = coord(x, y);
-                    row.emplace_back(MapElement{MapElementType::open_space, true});
+                    row.emplace_back(GridElement{GridElementType::open_space, true});
                 }
             }
             _map.emplace_back(std::move(row));
@@ -129,8 +129,8 @@ class Guard {
             return WalkResult::exited;
         }
 
-        if (MapElement &e{_map[_guard_pos.x + x_movement, _guard_pos.y + y_movement]};
-            e.type != MapElementType::obstacle) {
+        if (GridElement &e{_map[_guard_pos.x + x_movement, _guard_pos.y + y_movement]};
+            e.type != GridElementType::obstacle) {
             e.stepped_on = true;
             _guard_pos = coord(_guard_pos.x + x_movement, _guard_pos.y + y_movement);
             return WalkResult::moved;
@@ -188,5 +188,7 @@ int main() {
 
 
     std::cout << "Answer for problem 1 is: " << output_problem_1 << std::endl;
+
+    // problem 2 brute force, just recreate once for each tile, and place an obstacle, and rerun.
     return 0;
 }

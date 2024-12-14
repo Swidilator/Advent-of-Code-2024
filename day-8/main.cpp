@@ -13,25 +13,25 @@
 
 #include <bits/ranges_algo.h>
 
-#include "utilities.h"
+import Util;
 
-enum class MapElementType {
+enum class GridElementType {
     open_space, antenna
 };
 
-class MapElement : public util::MapElementBase<char> {
-    MapElementType _map_element_type{};
+class GridElement : public util::GridElementBase<char> {
+    GridElementType _map_element_type;
 
 public:
     bool antinode = false;
 
 
-    MapElement(const char c, const util::Coordinates &coords)
-        : MapElementBase{c, coords} {
+    GridElement(const char c, const util::Coordinates &coords)
+        : GridElementBase{c, coords} {
         if (c == '.') {
-            _map_element_type = MapElementType::open_space;
+            _map_element_type = GridElementType::open_space;
         } else {
-            _map_element_type = MapElementType::antenna;
+            _map_element_type = GridElementType::antenna;
         }
     }
 
@@ -39,11 +39,11 @@ public:
         return _data;
     }
 
-    MapElementType get_map_element_type() const {
+    GridElementType get_map_element_type() const {
         return _map_element_type;
     }
 
-    void print_data() {
+    void print_data() const {
         std::cout << _data << std::endl;
     }
 };
@@ -62,12 +62,12 @@ int main() {
                                                  })
                                                  | std::ranges::to<std::vector>();
 
-    util::Grid<char, MapElement> grid{input_data};
+    util::Grid<char, GridElement> grid{input_data};
 
-    std::unordered_map<char, std::vector<std::reference_wrapper<MapElement> > > antennas{};
+    std::unordered_map<char, std::vector<std::reference_wrapper<GridElement> > > antennas{};
     for (std::size_t x = 0; x < grid.height(); ++x) {
         for (std::size_t y = 0; y < grid.width(); ++y) {
-            if (grid[x,y].get_map_element_type() == MapElementType::antenna) {
+            if (grid[x,y].get_map_element_type() == GridElementType::antenna) {
                 antennas[grid[x,y].get_raw_data()].emplace_back(std::reference_wrapper(grid[x,y]));
             }
         }

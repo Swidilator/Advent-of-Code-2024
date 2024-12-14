@@ -13,15 +13,15 @@
 
 #include <bits/ranges_algo.h>
 
-#include "utilities.h"
+import Util;
 
-bool test_operators(
+[[nodiscard]] bool test_operators(
     const long answer,
     const long current_value,
     const std::vector<long> &elements,
     const std::vector<long>::iterator left
 ) {
-    std::cout << current_value << std::endl;
+    //std::cout << current_value << std::endl;
     if (left == elements.end()) {
         if (current_value == answer)
             return true;
