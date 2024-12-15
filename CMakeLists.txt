@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
 
-add_library(util STATIC )
+add_library(util STATIC)
 target_sources(util PUBLIC
         FILE_SET modules
         TYPE CXX_MODULES
@@ -35,5 +35,5 @@ target_link_libraries(day-7 util)
 add_executable(day-8 day-8/main.cpp)
 target_link_libraries(day-8 util)
 
-#add_executable(day-9 day-9/main.cpp)
-#target_link_libraries(day-9 util)
+add_executable(day-9 day-9/main.cpp)
+target_link_libraries(day-9 util)
