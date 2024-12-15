@@ -104,7 +104,7 @@ namespace util {
                        return vec
                               | std::views::filter(criteria)
                               | std::views::transform([](E &e) {
-                                  return std::reference_wrapper<E>(e);
+                                  return std::ref<E>(e);
                               });
                    })
                    | std::views::join | std::ranges::to<std::vector>();
