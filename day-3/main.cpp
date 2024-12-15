@@ -9,7 +9,7 @@
 
 //#include <absl/strings/str_split.h>
 
-long long stoi(std::string &input) {
+long long stoi(std::string& input) {
     long long result;
     std::from_chars(input.data(), input.data() + input.size(), result);
     return result;
@@ -40,7 +40,7 @@ int main() {
 
     std::regex full_mul_regex("mul\\(([0-9]{1,3}),([0-9]{1,3})\\)");
 
-    for (auto &single_input: input_lines) {
+    for (auto& single_input: input_lines) {
         auto words_begin = std::sregex_iterator(single_input.begin(), single_input.end(), full_mul_regex);
         auto words_end = std::sregex_iterator();
 

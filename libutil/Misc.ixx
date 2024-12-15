@@ -20,15 +20,15 @@ namespace util {
     export typedef std::vector<std::string> string_vec;
     export typedef std::vector<std::vector<std::string> > string_vec_vec;
 
-    export auto string_to_long(const string_vec &input) -> std::vector<long> {
-        return input | std::views::transform([](const std::string &str) {
+    export auto string_to_long(const string_vec& input) -> std::vector<long> {
+        return input | std::views::transform([](const std::string& str) {
                    return std::stol(str);
                })
                | std::ranges::to<std::vector>();
     }
 
 
-    export auto load_to_vector(const std::filesystem::path &file_path) -> string_vec {
+    export auto load_to_vector(const std::filesystem::path& file_path) -> string_vec {
         auto input_file_ifstream = std::ifstream(file_path);
 
         if (!input_file_ifstream.is_open()) {
@@ -47,12 +47,12 @@ namespace util {
 
 
     export auto split_vector_of_strings(
-        const string_vec &input,
+        const string_vec& input,
         const std::string_view delim
     ) -> string_vec_vec {
-        return input | std::views::transform([delim](const std::string &str) {
+        return input | std::views::transform([delim](const std::string& str) {
             return std::views::split(str, delim)
-                   | std::views::transform([](const auto &a) { return std::string(std::string_view{a}); })
+                   | std::views::transform([](const auto& a) { return std::string(std::string_view{a}); })
                    | std::ranges::to<std::vector>();
         }) | std::ranges::to<std::vector>();
     }

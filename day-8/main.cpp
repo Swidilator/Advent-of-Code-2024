@@ -26,7 +26,7 @@ public:
     bool antinode = false;
 
 
-    GridElement(const char c, const util::Coordinates &coords)
+    GridElement(const char c, const util::Coordinates& coords)
         : GridElementBase{c, coords} {
         if (c == '.') {
             _map_element_type = GridElementType::open_space;
@@ -35,7 +35,7 @@ public:
         }
     }
 
-    const char &get_raw_data() const {
+    const char& get_raw_data() const {
         return _data;
     }
 
@@ -48,7 +48,7 @@ public:
     }
 };
 
-util::Coordinates calculate_antinode(const util::Coordinates &a, const util::Coordinates &b) {
+util::Coordinates calculate_antinode(const util::Coordinates& a, const util::Coordinates& b) {
     return {b.x + (b.x - a.x), b.y + (b.y - a.y)};
 }
 
@@ -57,7 +57,7 @@ int main() {
     using std::operator""sv;
 
     std::vector<std::vector<char> > input_data = util::load_to_vector("./puzzle_input_day_8_example.txt")
-                                                 | std::views::transform([](const std::string &str) {
+                                                 | std::views::transform([](const std::string& str) {
                                                      return str | std::ranges::to<std::vector>();
                                                  })
                                                  | std::ranges::to<std::vector>();
@@ -75,9 +75,9 @@ int main() {
 
     bool solution_1_only = true;
 
-    for (const auto &kv: antennas) {
-        for (const auto &a: kv.second) {
-            for (const auto &b: kv.second) {
+    for (const auto& kv: antennas) {
+        for (const auto& a: kv.second) {
+            for (const auto& b: kv.second) {
                 auto a_coords = a.get().get_coordinates();
                 auto b_coords = b.get().get_coordinates();
                 if (a_coords == b_coords) {

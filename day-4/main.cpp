@@ -20,7 +20,7 @@ int main() {
     int input_width = input_strings[0].size();
     int input_height = input_strings.size();
 
-    auto check_word = [](const std::string &word) {
+    auto check_word = [](const std::string& word) {
         return word == "XMAS" || word == "SAMX";
     };
 

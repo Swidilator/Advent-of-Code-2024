@@ -17,7 +17,7 @@ namespace util {
         long x, y;
 
 
-        auto operator==(const Coordinates &b) const -> bool {
+        auto operator==(const Coordinates& b) const -> bool {
             return (x == b.x) && (y == b.y);
         }
     };
@@ -30,12 +30,12 @@ namespace util {
         Coordinates _coordinates;
 
     public:
-        GridElementBase(const T data, const Coordinates &c)
+        GridElementBase(const T data, const Coordinates& c)
             : _data{data}, _coordinates{c} {
         }
 
 
-        auto get_coordinates() const -> const Coordinates & {
+        auto get_coordinates() const -> const Coordinates& {
             return _coordinates;
         }
     };
@@ -47,12 +47,12 @@ namespace util {
         std::vector<std::vector<E> > _grid_data{};
 
     public:
-        explicit Grid(const std::vector<std::vector<S> > &input_map) {
+        explicit Grid(const std::vector<std::vector<S> >& input_map) {
             _height = input_map.size();
             _width = input_map[0].size();
 
             int x = 0;
-            std::ranges::for_each(input_map, [this, &x](const std::vector<S> &input_row) -> void {
+            std::ranges::for_each(input_map, [this, &x](const std::vector<S>& input_row) -> void {
                 std::vector<E> row{};
                 for (std::size_t y = 0; y < input_row.size(); ++y) {
                     row.emplace_back(input_row[y], Coordinates(x, y));
@@ -74,7 +74,7 @@ namespace util {
 
 
         // referenced x,y = 0 at top left, row major
-        [[nodiscard]] auto operator[](const std::size_t x, const std::size_t y) -> E & {
+        [[nodiscard]] auto operator[](const std::size_t x, const std::size_t y) -> E& {
             if (x < _height && y < _width) {
                 return _grid_data[x][y];
             }
@@ -82,7 +82,7 @@ namespace util {
         }
 
 
-        [[nodiscard]] auto operator[](const std::size_t x, const std::size_t y) const -> const E & {
+        [[nodiscard]] auto operator[](const std::size_t x, const std::size_t y) const -> const E& {
             if (x < _height && y < _width) {
                 return _grid_data[x][y];
             }
@@ -90,7 +90,7 @@ namespace util {
         }
 
 
-        [[nodiscard]] auto contains(const Coordinates &coords) const -> bool {
+        [[nodiscard]] auto contains(const Coordinates& coords) const -> bool {
             return coords.x < _height
                    && coords.x >= 0
                    && coords.y < _width
@@ -98,12 +98,12 @@ namespace util {
         }
 
 
-        [[nodiscard]] auto find_all_if(std::function<bool(E &)> criteria) -> std::vector<std::reference_wrapper<E> > {
+        [[nodiscard]] auto find_all_if(std::function<bool(E&)> criteria) -> std::vector<std::reference_wrapper<E> > {
             return _grid_data
-                   | std::views::transform([&criteria](std::vector<E> &vec) {
+                   | std::views::transform([&criteria](std::vector<E>& vec) {
                        return vec
                               | std::views::filter(criteria)
-                              | std::views::transform([](E &e) {
+                              | std::views::transform([](E& e) {
                                   return std::ref<E>(e);
                               });
                    })

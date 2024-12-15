@@ -18,7 +18,7 @@ import Util;
 [[nodiscard]] bool test_operators(
     const long answer,
     const long current_value,
-    const std::vector<long> &elements,
+    const std::vector<long>& elements,
     const std::vector<long>::iterator left
 ) {
     //std::cout << current_value << std::endl;
@@ -43,7 +43,7 @@ int main() {
     auto initial_read = util::load_to_vector("./puzzle_input_day_7.txt");
 
     std::vector<std::string> answers_strings{}, elements_strings{};
-    for (const auto &vec: util::split_vector_of_strings(initial_read, ": "sv)) {
+    for (const auto& vec: util::split_vector_of_strings(initial_read, ": "sv)) {
         answers_strings.emplace_back(vec[0]);
         elements_strings.emplace_back(vec[1]);
     }
@@ -51,7 +51,7 @@ int main() {
     auto answers = util::string_to_long(answers_strings);
 
     auto elements = util::split_vector_of_strings(elements_strings, " ")
-                    | std::views::transform([](const std::vector<std::string> &vec) {
+                    | std::views::transform([](const std::vector<std::string>& vec) {
                         return util::string_to_long(vec);
                     })
                     | std::ranges::to<std::vector>();

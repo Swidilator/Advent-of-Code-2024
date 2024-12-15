@@ -40,9 +40,8 @@ class PuzzleMap {
     std::size_t _width, _height = 0;
     coord _guard_starting_position{};
     std::vector<std::vector<GridElement> > _map{};
+
 public:
-
-
     [[nodiscard]] coord guard_starting_position() const {
         return _guard_starting_position;
     }
@@ -56,14 +55,14 @@ public:
     }
 
     // referenced x,y = 0 at top left, row major
-    [[nodiscard]] GridElement &operator[](const std::size_t x, const std::size_t y) {
+    [[nodiscard]] GridElement& operator[](const std::size_t x, const std::size_t y) {
         if (x < _height && y < _width) {
             return _map[x][y];
         }
         throw std::out_of_range("Invalid map coordinates");
     }
 
-    [[nodiscard]] const GridElement &operator[](const std::size_t x, const std::size_t y) const {
+    [[nodiscard]] const GridElement& operator[](const std::size_t x, const std::size_t y) const {
         if (x < _height && y < _width) {
             return _map[x][y];
         }
@@ -72,8 +71,8 @@ public:
 
     [[nodiscard]] int count_stepped_on() const {
         int num_stepped_on{};
-        std::ranges::for_each(_map, [&num_stepped_on](const std::vector<GridElement> &vec) {
-            std::ranges::for_each(vec, [&num_stepped_on](const GridElement &e) {
+        std::ranges::for_each(_map, [&num_stepped_on](const std::vector<GridElement>& vec) {
+            std::ranges::for_each(vec, [&num_stepped_on](const GridElement& e) {
                 if (e.stepped_on) {
                     num_stepped_on++;
                 }
@@ -82,12 +81,12 @@ public:
         return num_stepped_on;
     }
 
-    explicit PuzzleMap(const std::vector<std::string> &input_map) {
+    explicit PuzzleMap(const std::vector<std::string>& input_map) {
         _height = input_map.size();
         _width = input_map[0].size();
 
         int x = 0;
-        std::ranges::for_each(input_map, [this, &x](const std::string &str) -> void {
+        std::ranges::for_each(input_map, [this, &x](const std::string& str) -> void {
             std::vector<GridElement> row{};
             for (std::size_t y = 0; y < str.size(); ++y) {
                 if (str[y] == '#')
@@ -129,7 +128,7 @@ class Guard {
             return WalkResult::exited;
         }
 
-        if (GridElement &e{_map[_guard_pos.x + x_movement, _guard_pos.y + y_movement]};
+        if (GridElement& e{_map[_guard_pos.x + x_movement, _guard_pos.y + y_movement]};
             e.type != GridElementType::obstacle) {
             e.stepped_on = true;
             _guard_pos = coord(_guard_pos.x + x_movement, _guard_pos.y + y_movement);
@@ -152,7 +151,7 @@ class Guard {
     }
 
 public:
-    explicit Guard(PuzzleMap &&map)
+    explicit Guard(PuzzleMap&& map)
         : _map{std::move(map)}, dir{GuardDirection::up} {
         _guard_pos = _map.guard_starting_position();
     }

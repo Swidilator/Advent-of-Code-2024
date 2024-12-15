@@ -33,7 +33,7 @@ int main() {
 
         std::vector<int> split_line;
 
-        for (const auto &&word: single_line | std::views::split(delim)) {
+        for (const auto&& word: single_line | std::views::split(delim)) {
             int result;
             std::from_chars(word.data(), word.data() + word.size(), result);
             split_line.emplace_back(result);

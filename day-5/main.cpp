@@ -24,7 +24,7 @@ int main() {
                                    util::load_to_vector("./puzzle_input_day_5_rules.txt"),
                                    "|"sv
                                )
-                               | std::views::transform([](const auto &vec) {
+                               | std::views::transform([](const auto& vec) {
                                    return std::pair<int, int>{
                                        std::stol(std::string(vec[0])),
                                        std::stol(std::string(vec[1]))
@@ -37,21 +37,21 @@ int main() {
                                      util::load_to_vector("./puzzle_input_day_5_updates.txt"),
                                      ","sv
                                  )
-                                 | std::views::transform([](const std::vector<std::string> &vec) {
+                                 | std::views::transform([](const std::vector<std::string>& vec) {
                                      return util::string_to_long(vec);
                                  })
                                  | std::ranges::to<std::vector>();
 
     // create rules blacklist
     std::unordered_map<int, std::vector<int> > rules_map;
-    for (const auto &p: input_strings_rules) {
+    for (const auto& p: input_strings_rules) {
         rules_map[p.second].emplace_back(p.first);
     }
 
     int sum_middle_values{};
 
     // find violations using blacklist
-    std::ranges::for_each(input_strings_updates, [&](const std::vector<long> &update_vec) {
+    std::ranges::for_each(input_strings_updates, [&](const std::vector<long>& update_vec) {
         bool error_found = false;
         for (int i = 0; i < update_vec.size(); ++i) {
             if (error_found) {
@@ -59,7 +59,7 @@ int main() {
             }
             for (int j = i + 1; j < update_vec.size(); ++j) {
                 if (rules_map.contains(update_vec[i])) {
-                    for (const int &r: rules_map[update_vec[i]]) {
+                    for (const int& r: rules_map[update_vec[i]]) {
                         if (r == update_vec[j]) {
                             error_found = true;
                             break;
