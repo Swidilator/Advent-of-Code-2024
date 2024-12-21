@@ -37,3 +37,6 @@ target_link_libraries(day-8 util)
 
 add_executable(day-9 day-9/main.cpp)
 target_link_libraries(day-9 util)
+
+add_executable(day-10 day-10/main.cpp)
+target_link_libraries(day-10 util)
