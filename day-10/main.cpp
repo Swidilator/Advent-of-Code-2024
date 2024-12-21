@@ -45,7 +45,7 @@ auto find_paths(const util::Coordinates& c, map_grid g) -> std::vector<std::stri
     if (g[c]._height == 9) {
         std::cout << std::format("Found coords: x: {}   y: {}\n", c.x, c.y);
 
-        return std::vector{std::format("{}{}", c.x, c.y)};
+        return std::vector{std::format("{}|{}", c.x, c.y)};
     }
 
     // look up
