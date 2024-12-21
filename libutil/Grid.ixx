@@ -16,9 +16,20 @@ namespace util {
     export struct Coordinates {
         long x, y;
 
+        Coordinates(long x, long y)
+            : x{x}, y{y} {
+        }
 
         auto operator==(const Coordinates& b) const -> bool {
             return (x == b.x) && (y == b.y);
+        }
+
+        auto operator<(const Coordinates& b) const -> bool {
+            return x < b.x || y < b.y;
+        }
+
+        auto operator<=(const Coordinates& b) const -> bool {
+            return x <= b.x || y <= b.y;
         }
     };
 
@@ -87,6 +98,16 @@ namespace util {
                 return _grid_data[x][y];
             }
             throw std::out_of_range("Invalid map coordinates");
+        }
+
+
+        [[nodiscard]] auto operator[](const Coordinates& c) -> E& {
+            return operator[](c.x, c.y);
+        }
+
+
+        [[nodiscard]] auto operator[](const Coordinates& c) const -> const E& {
+            return operator[](c.x, c.y);
         }
 
 
